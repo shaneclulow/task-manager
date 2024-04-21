@@ -12,15 +12,13 @@
 </head>
 <body>
 <script>
-	// Initial script before the page has even loaded:
-	// Check if we're logged in with an auth_token Cookie from the server or our Cookie (doesn't check if token is valid/expired or not)
+
 	if (decodeURIComponent(document.cookie).indexOf('auth_token=') < 0 && decodeURIComponent(document.cookie).indexOf('task_manager_auth_token=') < 0) {
 		window.location.href = "login.html"
 	}
 </script>
 	<div class="w3-content" id="page-container">
-		<!-- required to centre everything -->
-
+	
 		<div class="w3-bar w3-theme" id="nav-bar">
 			<a class="w3-button w3-bar-item w3-theme-d1 w3-left" href="./">Home</a>
 			<a class="w3-button w3-bar-item w3-theme-d1 w3-right" href="about.html">About</a>
@@ -31,7 +29,7 @@
 		</div>
 		<div class="w3-center" id="intro">
 			<span class="fa fa-list-alt w3-jumbo w3-margin-top"></span>
-			<!-- <img src="assets/checklist-logo.png" alt="Checklist clipboard logo" class="w3-image w3-margin-top"> -->
+			
 			<p>
 				<strong>Modify your Profile for the Vanilla JavaScript API Based Todo Task Manager</strong>
 			</p>
@@ -42,7 +40,7 @@
 			</div>
 		</div>
 		<div class="w3-center" id="profile">
-			<div class="w3-col w3-container w3-left sa-width-15"></div> <!-- left/right responsive padding -->
+			<div class="w3-col w3-container w3-left sa-width-15"></div> 
 			<div class="w3-col w3-container w3-right sa-width-15"></div>
 			<div class="w3-left-align w3-rest">
 				<p>Update your Todo Task Manager Profile by entering any new values below and clicking <b>Save</b> - you don't need to update them all. To remove your account click <b>Delete Profile</b>. To log yourself out of all sessions on all machines click <b>Logout All Sessions</b>.</p>

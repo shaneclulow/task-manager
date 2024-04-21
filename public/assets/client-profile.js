@@ -1,28 +1,28 @@
-// Client-Side Profile code for the REST API
 
-// Initialization
-const apiUrl = ''															// Blank will default to current host, if set make sure CORS is configured on the back-end!
-const authToken = 'Bearer ' + (getCookie('auth_token') || getCookie('task_manager_auth_token'))		// Grab the Token from either the back-end set Cookie or one we've set
+
+
+const apiUrl = ''															
+const authToken = 'Bearer ' + (getCookie('auth_token') || getCookie('task_manager_auth_token'))		
 const profileForm = document.querySelector('#profile-form')
-var userProfile = {}														// Will hold the current User's Profile
-hookMessageTags()															// Three optional message display <P> tags
+var userProfile = {}														
+hookMessageTags()															
 
-// Add Event Handlers
-document.addEventListener('DOMContentLoaded', handlerDomLoaded)									// Initialization Handler for when DOM is complete
-profileForm.addEventListener('submit', handleSubmitForm)										// Profile form handler
-document.querySelector('#btn-del-profile').addEventListener('click', handleDeleteProfile);		// Delete Profile button
-document.querySelector('#btn-logout-all').addEventListener('click', handleLogoutAll);			// Logout All Sessions button
 
-// Event Handlers
+document.addEventListener('DOMContentLoaded', handlerDomLoaded)									
+profileForm.addEventListener('submit', handleSubmitForm)										
+document.querySelector('#btn-del-profile').addEventListener('click', handleDeleteProfile);		
+document.querySelector('#btn-logout-all').addEventListener('click', handleLogoutAll);			
+
+
 async function handlerDomLoaded() {
-	// Retrieve User's Profile from the API once the Document has loaded
+	
 	try {
-		const response = await fetch(apiUrl + '/users/me', {			// GET is the default Fetch method
+		const response = await fetch(apiUrl + '/users/me', {			
 			credentials: 'include',
 			headers: { Authorization: authToken }
 		})
 		if (response.ok) {
-			userProfile = await response.json()						// Parse the returned JSON from the returned Body
+			userProfile = await response.json()						
 		} else {
 			throw `Failed to retrieve Profile data! ${response.statusText} - ${response.status}`
 		}
@@ -36,22 +36,22 @@ async function handlerDomLoaded() {
 	if (Object.keys(userProfile).length > 0) {
 		document.querySelector('#name-field').value = userProfile.name
 		document.querySelector('#email-field').value = userProfile.email
-		if (userProfile.age && userProfile.age != 0) { document.querySelector('#age-field').value = userProfile.age.toString() }		// Default is 0, and if set to 0 will clear it
+		if (userProfile.age && userProfile.age != 0) { document.querySelector('#age-field').value = userProfile.age.toString() }		
 	}
  }
 
 async function handleSubmitForm(event) {
-	// Combination Handler / Workflow function
-	event.preventDefault()							// Stop Form's default submit/page refresh action
-	clearMessages()									// Clear any existing messages if the user has interacted with the page
-	let formData = getFormData(profileForm, true)	// The API trims leading/trailing spaces from passwords anyway
+	
+	event.preventDefault()							
+	clearMessages()									
+	let formData = getFormData(profileForm, true)	
 	let result;
 
 	removeEmptyProperties(formData)
 	let updateEmailCookie = getCookie('task_manager_email') == userProfile.email ? true : false;
 
 	try {
-		// Update the User's profile
+		
 		const response = await fetch(apiUrl + '/users/me', {
 			credentials: 'include',
 			method: 'PATCH',
@@ -61,7 +61,7 @@ async function handleSubmitForm(event) {
 			},
 			body: JSON.stringify(formData)
 		})
-		result = await response.json()			// The Updated user is returned
+		result = await response.json()			
 		if (!response.ok) {
 			throw `Failure Updating User Profile! ${response.statusText} - ${response.status}`
 		}
@@ -79,7 +79,7 @@ async function handleSubmitForm(event) {
 }
 
 async function handleLogoutAll(event) {
-	// Combination Handler/Workflow
+	
 	clearMessages()
 	try {
 		const response = await fetch(apiUrl + '/users/logoutAll', {
@@ -93,12 +93,12 @@ async function handleLogoutAll(event) {
 		message1.textContent = 'SUCCESS!'
 		message2.textContent = 'All your Sessions have been logged out'
 		message3.textContent = 'You will be returned to the login page in 3 seconds'
-		setCookie('task_manager_auth_token', 'deleted', -1)				// Our Cookie so we must remove it
+		setCookie('task_manager_auth_token', 'deleted', -1)				
 		setTimeout( () => {
 			window.location.href = "login.html"
 		}, 3000)
 	} catch (err) {
-		// User can try again perhaps
+		
 		message1.textContent = 'ERROR!'
 		message2.textContent = err
 		message3.textContent = 'Unable to POST logout all Sessions!'
@@ -107,7 +107,7 @@ async function handleLogoutAll(event) {
 }
 
 async function handleDeleteProfile(event) {
-	// Combination Handler/Workflow
+	
 	clearMessages()
 
 	let confirm = window.confirm("Click OK to delete your Profile")
@@ -122,8 +122,8 @@ async function handleDeleteProfile(event) {
 		if (!response.ok) {
 			throw `Failed to delete Profile! ${response.statusText} - ${response.status}`
 		} 
-		setCookie('task_manager_auth_token', 'deleted', -1)				// Our Cookie so we must remove it
-		setCookie('auth_token', 'deleted', -1)							// Remove just in case
+		setCookie('task_manager_auth_token', 'deleted', -1)				
+		setCookie('auth_token', 'deleted', -1)							
 		message1.textContent = 'SUCCESS!'
 		message2.textContent = 'Your Profile has been deleted'
 		message3.textContent = 'You will be returned to the main page in 3 seconds'
@@ -131,7 +131,7 @@ async function handleDeleteProfile(event) {
 			window.location.href = "login.html"
 		}, 3000)
 	} catch (err) {
-		// User can try again perhaps
+		
 		message1.textContent = 'ERROR!'
 		message2.textContent = err
 		message3.textContent = 'Unable to DELETE Profile!'

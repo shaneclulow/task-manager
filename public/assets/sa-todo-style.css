@@ -1,10 +1,10 @@
-/* Todo Task Manager custom styles */
+
 
 .sa-font-serif {
 	font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
-.sa-no-focus-outline:focus:not(:focus-visible) {		/* Instead of just :focus, From: https://css-tricks.com/the-focus-visible-trick/ */
+.sa-no-focus-outline:focus:not(:focus-visible) {		
 	outline: none;
 } 
 
