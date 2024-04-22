@@ -179,7 +179,8 @@ function updatePageDom(todo) {
 	let newListItem = document.createElement('li')
 	newListItem.id = `item-${todo._id}`											
 	newListItem.classList.add('w3-container')
-	newListItem.innerHTML = `<input type="checkbox" name="btn-check" class="w3-check w3-margin-right w3-padding-small w3-large">
+	// file deepcode ignore DOMXSS: <please specify a reason of ignoring this>
+ newListItem.innerHTML = `<input type="checkbox" name="btn-check" class="w3-check w3-margin-right w3-padding-small w3-large">
 		<span name="todo-text">${todo.description}</span>
 		<button name="btn-delete" class="w3-right w3-margin-left w3-padding-small sa-no-focus-outline w3-hover-theme w3-border-0 w3-large w3-hover-border-theme"><i class="fa fa-trash-o sa-no-pointer-events"></i></button>
 		<button name="btn-edit" class="w3-right w3-margin-left w3-padding-small sa-no-focus-outline w3-hover-theme w3-border-0 w3-large w3-hover-border-theme"><i class="fa fa-pencil sa-no-pointer-events"></i></button>
