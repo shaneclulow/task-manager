@@ -13,7 +13,7 @@ router.post('/tasks', auth, async (req, res) => {
         await task.save()
         res.status(201).send(task)
     } catch (e) {
-        res.status(400).send(e)
+        res.status(400).send("Bad Request")
     }
 })
 
@@ -64,7 +64,7 @@ router.patch('/tasks/:id', auth, async (req, res) => {
         // deepcode ignore XSS: This has been nullified on the tasks model
         res.send(task)
     } catch (e) {
-        res.status(400).send(e)
+        res.status(400).send("Bad Request")
     }
 })
 

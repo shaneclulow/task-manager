@@ -13,7 +13,7 @@ router.post('/users', async (req, res) => {
         const token = await user.generateAuthToken()
         res.status(201).send({ user, token })
     } catch (e) {
-        res.status(400).send(e)
+        res.status(400).send("Bad Request")
     }
 })
 router.get('/users', auth, adminAuth, async (req, res) => {
@@ -55,7 +55,7 @@ router.patch('/users/:id/role', auth, adminAuth, async (req, res) => {
 
         res.send({ user });
     } catch (e) {
-        res.status(400).send(e);
+        res.status(400).send("Bad Request");
     }
 })
 
@@ -65,7 +65,7 @@ router.post('/users/login', async (req, res) => {
         const token = await user.generateAuthToken()
         res.send({ user, token })
     } catch (e) {
-        res.status(400).send()
+        res.status(400).send("Bad Request")
     }
 })
 
@@ -110,7 +110,7 @@ router.patch('/users/me', auth, async (req, res) => {
         await req.user.save()
         res.send(req.user)
     } catch (e) {
-        res.status(400).send(e)
+        res.status(400).send("Bad Request")
     }
 })
 
