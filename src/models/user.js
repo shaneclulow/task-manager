@@ -75,7 +75,7 @@ userSchema.methods.toJSON = function () {
 
 userSchema.methods.generateAuthToken = async function () {
     const user = this
-    const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET)
+    const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET, { expiresIn: '2 days' })
 
     user.tokens = user.tokens.concat({ token })
     await user.save()
@@ -99,7 +99,6 @@ userSchema.statics.findByCredentials = async (email, password) => {
     return user
 }
 
-// Hash the plain text password before saving
 userSchema.pre('save', async function (next) {
     const user = this
 
@@ -110,7 +109,6 @@ userSchema.pre('save', async function (next) {
     next()
 })
 
-// Delete user tasks when user is removed
 userSchema.pre('remove', async function (next) {
     const user = this
     await Task.deleteMany({ owner: user._id })

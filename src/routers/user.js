@@ -49,7 +49,7 @@ router.patch('/users/:id/role', auth, adminAuth, async (req, res) => {
             return res.status(404).send({ error: 'User not found.' });
         }
 
-        // Update the user's role
+       
         user.role = role;
         await user.save();
 
