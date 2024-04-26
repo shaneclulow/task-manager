@@ -33,7 +33,7 @@ router.delete('/users/:id', auth, adminAuth, async (req, res) => {
             return res.status(404).send();
         }
 
-        // deepcode ignore XSS: <please specify a reason of ignoring this>
+       
         res.send(user);
     } catch (e) {
         res.status(500).send();

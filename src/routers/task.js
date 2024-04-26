@@ -36,7 +36,7 @@ router.get('/tasks/:id', auth, async (req, res) => {
             return res.status(404).send()
         }
 
-        // deepcode ignore XSS: This has been nullified on the tasks model
+     
         res.send(task)
     } catch (e) {
         res.status(500).send()
@@ -61,7 +61,7 @@ router.patch('/tasks/:id', auth, async (req, res) => {
 
         updates.forEach((update) => task[update] = req.body[update])
         await task.save()
-        // deepcode ignore XSS: This has been nullified on the tasks model
+        
         res.send(task)
     } catch (e) {
         res.status(400).send("Bad Request")
@@ -76,7 +76,7 @@ router.delete('/tasks/:id', auth, async (req, res) => {
             res.status(404).send()
         }
 
-        // deepcode ignore XSS: This has been nullified on the tasks model
+        
         res.send(task)
     } catch (e) {
         res.status(500).send()

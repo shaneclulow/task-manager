@@ -4,7 +4,7 @@ const userRouter = require('./routers/user')
 const taskRouter = require('./routers/task')
 const helmet = require('helmet') 
 
-// file deepcode ignore UseCsurfForExpress: <please specify a reason of ignoring this>
+
 const app = express()
 const port = process.env.PORT
 
